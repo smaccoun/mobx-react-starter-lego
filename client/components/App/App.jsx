@@ -6,10 +6,11 @@ import {appState} from './AppState'
 
 @observer
 class App extends Component {
+
   render() {
     return (
         <div className={style.container}>
-          <p>Hello World!</p>
+          <button onClick={appState.login}>Log in</button>
           <p>Logged in dog? {appState.isLoggedIn.toString()}</p>
           <DevTools />
         </div>

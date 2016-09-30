@@ -1,15 +1,16 @@
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 
 class AppState {
   @observable isLoggedIn = false;
 
-  constructor() {
+  constructor() {}
 
+  @action
+  login = () => {
+    this.isLoggedIn = !this.isLoggedIn
   }
 }
 
 const appState = new AppState();
-
-console.log(appState);
 
 export {appState};
