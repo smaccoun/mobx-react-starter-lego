@@ -8,10 +8,11 @@ import {appState} from './AppState'
 class App extends Component {
 
   render() {
+
     return (
         <div className={style.container}>
-          <button onClick={appState.login}>Log in</button>
-          <p>Logged in dog? {appState.isLoggedIn.toString()}</p>
+          <button onClick={appState.incCount}>+ count</button>
+          <h3>{appState.count}</h3>
           <DevTools />
         </div>
     );

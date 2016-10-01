@@ -4,6 +4,7 @@
   "description": "Starter kit using Lego idea with server branches ready for merge",
   "scripts": {
     "start": "node ./config/webpack-dev-server.js",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src"
   },
   "author": "Steven MacCoun",
@@ -21,6 +22,7 @@
     "eslint-plugin-react": "^5.2.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
+    "flow-bin": "^0.33.0",
     "html-webpack-plugin": "^2.22.0",
     "mobx-react-devtools": "^4.2.0",
     "postcss": "^5.2.4",

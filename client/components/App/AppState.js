@@ -1,14 +1,18 @@
-import { observable, action } from 'mobx';
+// @flow
+
+import { observable, action, computed } from 'mobx';
+import {map, toJS} from 'mobx'
 
 class AppState {
-  @observable isLoggedIn = false;
+  @observable count: number = 0;
 
   constructor() {}
 
   @action
-  login = () => {
-    this.isLoggedIn = !this.isLoggedIn
+  incCount = () => {
+    this.count += 1;
   }
+
 }
 
 const appState = new AppState();
