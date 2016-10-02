@@ -4,6 +4,8 @@ import DevTools from 'mobx-react-devtools';
 import {observer} from 'mobx-react'
 import {appState} from './AppState'
 
+import PhotoOrganizer from '../PhotoOrganizer/PhotoOrganizer'
+
 @observer
 class App extends Component {
 
@@ -11,8 +13,7 @@ class App extends Component {
 
     return (
         <div className={style.container}>
-          <button onClick={appState.incCount}>+ count</button>
-          <h3>{appState.count}</h3>
+          <PhotoOrganizer />
           <DevTools />
         </div>
     );
