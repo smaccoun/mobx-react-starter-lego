@@ -2,17 +2,12 @@
 
 class Photo {
 
-  meta: {
-    label: string
-  }
+  label: string;
+  fileUrl: string;
 
-  src: string
-
-  constructor(label: string, src: string){
-    this.meta = {
-      label
-    }
-    this.src = src;
+  constructor(label: string, fileUrl: string){
+    this.label = label;
+    this.fileUrl = this.fileUrl;
   }
 }
 

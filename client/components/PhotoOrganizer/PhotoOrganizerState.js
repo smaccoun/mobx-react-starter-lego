@@ -1,6 +1,6 @@
 // @flow
 
-import {observable, action} from 'mobx'
+import {observable, action, computed} from 'mobx'
 import {Photo} from '../../types/Photos/PhotoType'
 
 const samplePhotos = [
@@ -8,13 +8,26 @@ const samplePhotos = [
   new Photo('word', 'http:word')
 ]
 
-console.log(samplePhotos);
 
 class PhotoOrganizerState {
   @observable photos: Array<Photo> = []
+  @observable filters: {search: string} = {search: ''}
+
+  @computed get filteredPhotos(): Array<Photo> {
+    let filters = this.filters;
+    let filteredPhotos: Array<Photo> = this.photos.filter(photo => {
+      return filters.search == photo.label;
+    })
+
+    return filteredPhotos;
+  }
 
   constructor() {
     this.fetchPhotos().then(photos => this.setPhotos(photos))
+  }
+
+  @action setSearchFilter = (sFilter: string) => {
+    this.filters.search = sFilter;
   }
 
   @action
