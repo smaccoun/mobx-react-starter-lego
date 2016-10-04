@@ -32,10 +32,7 @@ export default class PhotoOrganizer extends React.Component {
           setSelectFilter={this.setSelectFilter}
           clearAllFilters={this.clearAllFilters}
         />
-        <div>
-          <h3>Results: </h3>
-          <PhotoGallery photos={store.filteredPhotos} />
-        </div>
+        <PhotoGallery photos={store.filteredPhotos} />
       </div>
     )
   }

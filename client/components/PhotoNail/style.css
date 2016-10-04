@@ -4,10 +4,19 @@
   border: 1px solid black;
   width: 200px;
   height: 300px;
-  margin: 10px 10px 10px 10px;
+  margin: 30px 30px 30px 30px;
 }
 
 .container__img {
   border: 1px solid pink;
   height: 160px;
+}
+
+.modalImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 300px;
+  border: 5px solid pink;
 }

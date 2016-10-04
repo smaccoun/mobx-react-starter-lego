@@ -48,6 +48,8 @@
     "mobx-react": "^3.3.1",
     "muicss": "^0.9.0",
     "react": "^15.1.0",
-    "react-dom": "^15.1.0"
+    "react-bootstrap-modal": "^3.0.0",
+    "react-dom": "^15.1.0",
+    "react-modal-bootstrap": "^1.1.0"
   }
 }
