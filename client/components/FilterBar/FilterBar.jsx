@@ -28,7 +28,7 @@ export default class FilterBar extends React.Component {
         <div className={style.filterSelects}>
           {filterBar.map((filter, key) => {
               return(
-                <label key={key}> {filter.name}
+                <label key={key} className={style.filterSelect}> {filter.name}
                   <Select
                       name={filter.name}
                       value={filter.selectedValue}

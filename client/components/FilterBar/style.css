@@ -10,3 +10,7 @@
   display: flex;
   border: 1px solid green;
 }
+
+.filterSelect > * {
+  min-width: 150px;
+}
