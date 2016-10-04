@@ -12,10 +12,10 @@ const samplePhotos = [
 class PhotoOrganizerState {
   @observable baseFile: ?File = null;
   @observable photos: Array<Object> = []
-  @observable filters: {search: string,label: string} =
+  @observable filters: {search: string, layer1: string} =
   {
     search: '',
-    label: 'meow'
+    layer1: 'Muscle'
   }
 
 
@@ -31,8 +31,9 @@ class PhotoOrganizerState {
     let filteredPhotos: Array<Photo> = this.photos.filter(photo => {
       const searchMatch = !filters.search ||
             (photo.Description.toLowerCase().includes(filters.search.toLowerCase()));
-      // const labelMatch = !filters.label || (filters.label == photo.label);
-      return searchMatch;
+      console.log(photo['Layer 1'])
+      const layer1Match = !filters.layer1 || (filters.layer1 == photo['Layer 1']);
+      return searchMatch && layer1Match;
 
     })
 
@@ -77,8 +78,8 @@ class PhotoOrganizerState {
     this.filters.search = sFilter;
   }
 
-  @action setLabelFilter = (lFilter: string) => {
-    this.filters.label = lFilter;
+  @action setLayer1Filter = (lFilter: string) => {
+    this.filters.layer1 = lFilter;
   }
 
   @action

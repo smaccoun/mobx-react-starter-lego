@@ -13,10 +13,10 @@ export default class FilterBar extends React.Component {
     store.setSearchFilter(searchField);
   }
 
-  setLabelFilter = (e: any) => {
-    let labelFilter = e.target.value;
-    console.log(labelFilter);
-    store.setLabelFilter(labelFilter)
+  setLayer1Filter = (e: any) => {
+    let layer1Filter = e.target.value;
+    console.log(layer1Filter);
+    store.setLayer1Filter(layer1Filter)
   }
 
   render(){
@@ -26,10 +26,10 @@ export default class FilterBar extends React.Component {
         <div className={style.filterFields}>
           <input onChange={this.setSearchField} />
           <label> label
-            <select value={store.filters.label} onChange={this.setLabelFilter}>
+            <select value={store.filters.layer1} onChange={this.setLayer1Filter}>
               <option></option>
-              <option>meow</option>
-              <option>word</option>
+              <option>Muscle</option>
+              <option>Vasculature</option>
             </select>
           </label>
         </div>
