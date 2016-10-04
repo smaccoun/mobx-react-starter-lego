@@ -11,10 +11,11 @@ import PhotoGallery from '../PhotoGallery/PhotoGallery'
 @observer
 export default class PhotoOrganizer extends React.Component {
 
+  setSelectFilter(filterName, filterValue){
+    store.setSelectFilter(filterName, filterValue);
+  }
+
   render(){
-    console.log(toJS(store.photos));
-    console.log(toJS(store.filters));
-    console.log(toJS(store.filteredPhotos));
 
     return(
       <div className={style.container}>
@@ -22,7 +23,10 @@ export default class PhotoOrganizer extends React.Component {
           <h1>Inner Space Photo Gallery</h1>
           <input type="file" onChange={store.loadBaseFile} />
         </div>
-        <FilterBar filterBar={store.filterBar}/>
+        <FilterBar
+          filterBar={store.filterBar}
+          setSelectFilter={this.setSelectFilter}
+        />
         <div>
           <h3>Results: </h3>
           <PhotoGallery photos={store.filteredPhotos} />

@@ -14,9 +14,8 @@ export default class FilterBar extends React.Component {
   }
 
 
-  setFilter = (val: {label: string, value: string}, fName: string) => {
-    console.log(val);
-    console.log(`${val.label} ${fName}`);
+  selectFilter = (val: {label: string, value: string}, fName: string) => {
+    this.props.setSelectFilter(fName, val.label)
   }
 
   render(){
@@ -33,7 +32,7 @@ export default class FilterBar extends React.Component {
                       name={filter.name}
                       value={filter.selectedValue}
                       options={filter.options}
-                      onChange={(val) => this.setFilter(val, filter.name)}
+                      onChange={(val) => this.selectFilter(val, filter.name)}
                   />
                 </label>
               )

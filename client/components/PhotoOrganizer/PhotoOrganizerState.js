@@ -19,6 +19,16 @@ class Select {
 }
 
 class Filter {
+  name: string
+  value: string
+
+  constructor(name: string, value: string){
+    this.name = name;
+    this.value = value;
+  }
+}
+
+class FilterOptions {
   name: string = ''
   options: Array<Select> = []
   selectedValue: string = ''
@@ -34,19 +44,23 @@ const FILTER_COLUMNS = ['Layer 1', 'Layer 2', 'Part 1', 'System 1']
 
 class PhotoOrganizerState {
   @observable baseJson: Array<Object> = [];
-  @observable filters: {search: string, layer1: string} =
+  @observable filters: {search: string, select: Array<Filter>} =
   {
     search: '',
-    layer1: 'Muscle'
+    select: []
   }
 
+  @action setSelectFilter(filterName: string, filterValue: string){
+    let curIndex = this.filters.select.map(f => f.name).indexOf(filterName)
+    if(curIndex >= 0){
+      this.filters.select.splice(curIndex, 1)
+    }
 
-  @computed get filterString(): string {
-    return Object.keys(this.filters)
-                  .map(k => this.filters[k])
-                  .filter(f => f)
-                  .join(' && ')
+    this.filters.select.push(new Filter(filterName, filterValue))
+
+    console.log(toJS(this.filters.select));
   }
+
 
   distinctFilterOptions(): Object {
     const distinctFilters = {column: Set}
@@ -65,7 +79,7 @@ class PhotoOrganizerState {
     return distinctFilters
   }
 
-  @computed get filterBar(): Array<Filter> {
+  @computed get filterBar(): Array<FilterOptions> {
     const filterOptions = this.distinctFilterOptions();
     let filterBar =
     Object.keys(filterOptions)
@@ -75,22 +89,31 @@ class PhotoOrganizerState {
                 Array.from(filterOptions[fName])
                      .map(f => {return new Select(f, f)})
 
-              return new Filter(fName, options, options[0].value)
+              let sFilter = this.filters.select.find(f => f.name == fName);
+              console.log('SFILER!!!!')
+              console.log(sFilter);
+              console.log(options);
+              let selectedOption = sFilter ?
+                        options.find(o => o.value == sFilter.value) :
+                        options[0]
+              return new FilterOptions(fName, options, selectedOption.value)
             })
 
-    console.log(filterBar);
+
     return filterBar;
   }
 
   @computed get filteredRows(): Array<Object> {
     let filters = this.filters;
+    // console.log(toJS(filters))
     let filteredRows: Array<Object> = this.baseJson.filter(row => {
       const searchMatch = !filters.search ||
             (row.Description.toLowerCase().includes(filters.search.toLowerCase()));
-      console.log(row['Layer 1'])
-      const layer1Match = !filters.layer1 || (filters.layer1 == row['Layer 1']);
-      return searchMatch && layer1Match;
-
+      const selectMatch = filters.select.length == 0 ||
+                          filters.select
+                                  .map(f => {return row[f.name] == f.value})
+                                  .reduce((p, n) => p && n)
+      return searchMatch && selectMatch;
     })
 
     return filteredRows;
@@ -98,9 +121,13 @@ class PhotoOrganizerState {
 
   @computed get filteredPhotos(): Array<Photo> {
     return this.filteredRows.map(row => {
-      let label = row.Description;
       let fileUrl = row['File Name']
-      return new Photo(label, fileUrl)
+      let meta = {}
+      Object.keys(row).forEach(k => {meta[k] = row[k]})
+      console.log(meta);
+      let photo = new Photo(meta, fileUrl)
+      console.log(photo);
+      return photo
     })
   }
 
