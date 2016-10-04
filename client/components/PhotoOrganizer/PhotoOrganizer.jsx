@@ -22,7 +22,7 @@ export default class PhotoOrganizer extends React.Component {
           <h1>Inner Space Photo Gallery</h1>
           <input type="file" onChange={store.loadBaseFile} />
         </div>
-        <FilterBar />
+        <FilterBar distinctFilterOptions={store.distinctFilterOptions}/>
         <div>
           <h3>Results: </h3>
           <PhotoGallery photos={store.filteredPhotos} />

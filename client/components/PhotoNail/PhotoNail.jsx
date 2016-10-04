@@ -9,8 +9,7 @@ const PhotoNail = ({photo}) => {
         {photo['File Name']}
       </div>
       <div className={style.metaContainer}>
-        <p><b>Layer 1:</b> {photo['Layer 1']}</p>
-        <p>{photo.Description.substring(0,60)}</p>
+        <p>{photo.label.substring(0,60)}</p>
       </div>
     </div>
   )

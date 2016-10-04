@@ -10,8 +10,7 @@ const samplePhotos = [
 
 
 class PhotoOrganizerState {
-  @observable baseFile: ?File = null;
-  @observable photos: Array<Object> = []
+  @observable baseJson: Array<Object> = [];
   @observable filters: {search: string, layer1: string} =
   {
     search: '',
@@ -26,18 +25,45 @@ class PhotoOrganizerState {
                   .join(' && ')
   }
 
-  @computed get filteredPhotos(): Array<Photo> {
+  @computed get distinctFilterOptions(): Object {
+    const distinctFilters = {column: Set}
+    let data = this.baseJson;
+    data.forEach(row => {
+      Object.keys(row).forEach(column => {
+        const val = row[column]
+        if(column in distinctFilters){
+          distinctFilters[column].add(val)
+        }else{
+          distinctFilters[column] = new Set().add(val)
+        }
+      })
+    })
+
+    console.log(distinctFilters)
+
+    return distinctFilters
+  }
+
+  @computed get filteredRows(): Array<Object> {
     let filters = this.filters;
-    let filteredPhotos: Array<Photo> = this.photos.filter(photo => {
+    let filteredRows: Array<Object> = this.baseJson.filter(row => {
       const searchMatch = !filters.search ||
-            (photo.Description.toLowerCase().includes(filters.search.toLowerCase()));
-      console.log(photo['Layer 1'])
-      const layer1Match = !filters.layer1 || (filters.layer1 == photo['Layer 1']);
+            (row.Description.toLowerCase().includes(filters.search.toLowerCase()));
+      console.log(row['Layer 1'])
+      const layer1Match = !filters.layer1 || (filters.layer1 == row['Layer 1']);
       return searchMatch && layer1Match;
 
     })
 
-    return filteredPhotos;
+    return filteredRows;
+  }
+
+  @computed get filteredPhotos(): Array<Photo> {
+    return this.filteredRows.map(row => {
+      let label = row.Description;
+      let fileUrl = row['File Name']
+      return new Photo(label, fileUrl)
+    })
   }
 
   constructor() {
@@ -47,15 +73,7 @@ class PhotoOrganizerState {
 
   @action loadBaseFile = (evt: any) => {
     let baseFile = evt.target.files[0]
-    this.baseFile = baseFile;
-    this.loadPhotosFromFile(baseFile);
-  }
-
-  @action
-  loadPhotosFromFile = (baseFile: File) => {
-    console.log(baseFile);
-    const tPhotos: Array<Object> = [];
-    const setPhotos = this.setPhotos;
+    const setBaseJson = this.setBaseJson;
 
     Papa.parse(baseFile, {
       header: true,
@@ -63,15 +81,13 @@ class PhotoOrganizerState {
       complete: function(results) {
         console.log('GOT SOME DATA!!!!')
         console.log(results.data);
-        results.data.forEach((d, i) => {
-          console.log(toJS(d))
-          tPhotos.push(toJS(d));
-        })
-
-        console.log(tPhotos);
-        setPhotos(tPhotos)
+        setBaseJson(results.data)
       }
-    });
+    })
+  }
+
+  @action setBaseJson = (baseJson: Array<Object>) => {
+    this.baseJson = baseJson
   }
 
   @action setSearchFilter = (sFilter: string) => {
@@ -80,11 +96,6 @@ class PhotoOrganizerState {
 
   @action setLayer1Filter = (lFilter: string) => {
     this.filters.layer1 = lFilter;
-  }
-
-  @action
-  setPhotos = (photos: Array<Object>) => {
-    this.photos = photos;
   }
 
   fetchPhotos = () => {

@@ -20,18 +20,29 @@ export default class FilterBar extends React.Component {
   }
 
   render(){
+    let {distinctFilterOptions} = this.props;
     return(
       <div className={style.container}>
         <h3>Filters: </h3>
-        <div className={style.filterFields}>
-          <input onChange={this.setSearchField} />
-          <label> label
-            <select value={store.filters.layer1} onChange={this.setLayer1Filter}>
-              <option></option>
-              <option>Muscle</option>
-              <option>Vasculature</option>
-            </select>
-          </label>
+        <input onChange={this.setSearchField} />
+        <div>
+          {Object.keys(distinctFilterOptions)
+                .filter(f => (f == 'Layer 1' || f== 'Layer 2'))
+                .map(fName => {
+            let optionStr = Array.from(distinctFilterOptions[fName]).join(',')
+            let optionsArr = Array.from(distinctFilterOptions[fName]);
+            return(
+              <div className={style.filterFields}>
+                <label> {fName}
+                  <select>
+                    {optionsArr.map(option => {
+                      return(<option>{option}</option>)
+                    })}
+                  </select>
+                </label>
+              </div>
+            )
+          })}
         </div>
       </div>
     )
