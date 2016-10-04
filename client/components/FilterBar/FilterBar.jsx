@@ -3,8 +3,8 @@ import React from 'react'
 import style from './style.css'
 import {store} from '../PhotoOrganizer/PhotoOrganizerState.js'
 
-import Dropdown from 'muicss/lib/react/dropdown';
-import DropdownItem from 'muicss/lib/react/dropdown-item';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 export default class FilterBar extends React.Component {
 
@@ -13,36 +13,32 @@ export default class FilterBar extends React.Component {
     store.setSearchFilter(searchField);
   }
 
-  setLayer1Filter = (e: any) => {
-    let layer1Filter = e.target.value;
-    console.log(layer1Filter);
-    store.setLayer1Filter(layer1Filter)
+
+  setFilter = (val: {label: string, value: string}, fName: string) => {
+    console.log(val);
+    console.log(`${val.label} ${fName}`);
   }
 
   render(){
-    let {distinctFilterOptions} = this.props;
+    let {filterBar} = this.props;
     return(
       <div className={style.container}>
         <h3>Filters: </h3>
         <input onChange={this.setSearchField} />
-        <div>
-          {Object.keys(distinctFilterOptions)
-                .filter(f => (f == 'Layer 1' || f== 'Layer 2'))
-                .map(fName => {
-            let optionStr = Array.from(distinctFilterOptions[fName]).join(',')
-            let optionsArr = Array.from(distinctFilterOptions[fName]);
-            return(
-              <div className={style.filterFields}>
-                <label> {fName}
-                  <select>
-                    {optionsArr.map(option => {
-                      return(<option>{option}</option>)
-                    })}
-                  </select>
+        <div className={style.filterSelects}>
+          {filterBar.map((filter, key) => {
+              return(
+                <label key={key}> {filter.name}
+                  <Select
+                      name={filter.name}
+                      value={filter.selectedValue}
+                      options={filter.options}
+                      onChange={(val) => this.setFilter(val, filter.name)}
+                  />
                 </label>
-              </div>
-            )
-          })}
+              )
+            })
+          }
         </div>
       </div>
     )

@@ -6,6 +6,7 @@
   margin-top: 15px;
 }
 
-.filterFields > * {
-  margin: 5px 20px 5px 10px;
+.filterSelects {
+  display: flex;
+  border: 1px solid green;
 }

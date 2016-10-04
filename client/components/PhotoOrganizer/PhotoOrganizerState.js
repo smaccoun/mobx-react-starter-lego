@@ -8,6 +8,29 @@ const samplePhotos = [
   new Photo('word', 'http:word')
 ]
 
+class Select {
+  label: string
+  value: string
+
+  constructor(label: string, value: string){
+    this.label = label;
+    this.value = value;
+  }
+}
+
+class Filter {
+  name: string = ''
+  options: Array<Select> = []
+  selectedValue: string = ''
+
+  constructor(name: string, options: Array<Select>, selectedValue: string){
+    this.name = name;
+    this.options = options;
+    this.selectedValue = selectedValue;
+  }
+}
+
+const FILTER_COLUMNS = ['Layer 1', 'Layer 2', 'Part 1', 'System 1']
 
 class PhotoOrganizerState {
   @observable baseJson: Array<Object> = [];
@@ -25,9 +48,9 @@ class PhotoOrganizerState {
                   .join(' && ')
   }
 
-  @computed get distinctFilterOptions(): Object {
+  distinctFilterOptions(): Object {
     const distinctFilters = {column: Set}
-    let data = this.baseJson;
+    let data = toJS(this.baseJson);
     data.forEach(row => {
       Object.keys(row).forEach(column => {
         const val = row[column]
@@ -39,9 +62,24 @@ class PhotoOrganizerState {
       })
     })
 
-    console.log(distinctFilters)
-
     return distinctFilters
+  }
+
+  @computed get filterBar(): Array<Filter> {
+    const filterOptions = this.distinctFilterOptions();
+    let filterBar =
+    Object.keys(filterOptions)
+          .filter(f => FILTER_COLUMNS.includes(f))
+          .map(fName => {
+              let options =
+                Array.from(filterOptions[fName])
+                     .map(f => {return new Select(f, f)})
+
+              return new Filter(fName, options, options[0].value)
+            })
+
+    console.log(filterBar);
+    return filterBar;
   }
 
   @computed get filteredRows(): Array<Object> {
@@ -79,8 +117,7 @@ class PhotoOrganizerState {
       header: true,
       dynamicTyping: true,
       complete: function(results) {
-        console.log('GOT SOME DATA!!!!')
-        console.log(results.data);
+        console.log(toJS(results.data));
         setBaseJson(results.data)
       }
     })
