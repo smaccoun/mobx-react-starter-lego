@@ -12,7 +12,7 @@ class App extends Component {
   render() {
 
     return (
-        <div className={style.container}>
+        <div>
           <PhotoOrganizer />
           <DevTools />
         </div>

@@ -1,0 +1,13 @@
+.container {
+  display: inline-flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 100px;
+  height: 200px;
+  margin: 10px 10px 10px 10px;
+}
+
+.container__img {
+  border: 1px solid pink;
+  height: 160px;
+}

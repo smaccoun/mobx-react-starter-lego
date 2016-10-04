@@ -3,7 +3,10 @@ import {observer} from 'mobx-react'
 import {toJS} from 'mobx'
 import {store} from './PhotoOrganizerState'
 
+import style from './style.css'
+
 import FilterBar from '../FilterBar/FilterBar'
+import PhotoGallery from '../PhotoGallery/PhotoGallery'
 
 @observer
 export default class PhotoOrganizer extends React.Component {
@@ -14,23 +17,15 @@ export default class PhotoOrganizer extends React.Component {
     console.log(toJS(store.filteredPhotos));
 
     return(
-      <div>
-        <h1>Photo organizer!</h1>
-        <div>
+      <div className={style.container}>
+        <div className={style.head}>
+          <h1>Inner Space Photo Gallery</h1>
           <input type="file" onChange={store.loadBaseFile} />
-          <FilterBar />
-          <p>Filters: {store.filterString}</p>
-          <div>
-            <h3>Results: </h3>
-            <ul>
-            {store.filteredPhotos.map(photo => {
-                console.log(toJS(photo));
-                console.log(photo.Description);
-                return(<li>{photo.Description}</li>)
-              })
-            }
-          </ul>
-          </div>
+        </div>
+        <FilterBar />
+        <div>
+          <h3>Results: </h3>
+          <PhotoGallery photos={store.filteredPhotos} />
         </div>
       </div>
     )

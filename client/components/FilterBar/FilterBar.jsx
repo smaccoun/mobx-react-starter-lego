@@ -22,14 +22,17 @@ export default class FilterBar extends React.Component {
   render(){
     return(
       <div className={style.container}>
-        <input onChange={this.setSearchField} />
-        <label> label
-          <select value={store.filters.label} onChange={this.setLabelFilter}>
-            <option></option>
-            <option>meow</option>
-            <option>word</option>
-          </select>
-        </label>
+        <h3>Filters: </h3>
+        <div className={style.filterFields}>
+          <input onChange={this.setSearchField} />
+          <label> label
+            <select value={store.filters.label} onChange={this.setLabelFilter}>
+              <option></option>
+              <option>meow</option>
+              <option>word</option>
+            </select>
+          </label>
+        </div>
       </div>
     )
   }
