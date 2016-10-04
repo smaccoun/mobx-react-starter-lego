@@ -50,6 +50,12 @@ class PhotoOrganizerState {
     select: []
   }
 
+  @action clearAllFilters(){
+    console.log('CLEARING FILTERS!!!')
+    let selectFilters = this.filters.select.map(f => {new Filter('ANY', 'ANY')})
+    this.filters = {search: '', select: []}
+  }
+
   @action setSelectFilter(filterName: string, filterValue: string){
     let curIndex = this.filters.select.map(f => f.name).indexOf(filterName)
     if(curIndex >= 0){
@@ -71,7 +77,7 @@ class PhotoOrganizerState {
         if(column in distinctFilters){
           distinctFilters[column].add(val)
         }else{
-          distinctFilters[column] = new Set().add(val)
+          distinctFilters[column] = new Set().add(val).add('ANY')
         }
       })
     })
@@ -95,10 +101,9 @@ class PhotoOrganizerState {
               console.log(options);
               let selectedOption = sFilter ?
                         options.find(o => o.value == sFilter.value) :
-                        options[0]
+                        options.find(o => o.value == 'ANY')
               return new FilterOptions(fName, options, selectedOption.value)
             })
-
 
     return filterBar;
   }
@@ -111,7 +116,7 @@ class PhotoOrganizerState {
             (row.Description.toLowerCase().includes(filters.search.toLowerCase()));
       const selectMatch = filters.select.length == 0 ||
                           filters.select
-                                  .map(f => {return row[f.name] == f.value})
+                                  .map(f => {return f.value == 'ANY' || row[f.name] == f.value})
                                   .reduce((p, n) => p && n)
       return searchMatch && selectMatch;
     })

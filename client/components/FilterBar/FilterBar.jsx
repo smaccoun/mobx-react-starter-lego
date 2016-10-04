@@ -15,6 +15,7 @@ export default class FilterBar extends React.Component {
 
 
   selectFilter = (val: {label: string, value: string}, fName: string) => {
+    val = val || {label: '', value: ''}
     this.props.setSelectFilter(fName, val.label)
   }
 
@@ -38,6 +39,7 @@ export default class FilterBar extends React.Component {
               )
             })
           }
+          <button onClick={this.props.clearAllFilters}>Clear All Filters </button>
         </div>
       </div>
     )

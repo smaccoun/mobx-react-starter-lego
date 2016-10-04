@@ -15,6 +15,10 @@ export default class PhotoOrganizer extends React.Component {
     store.setSelectFilter(filterName, filterValue);
   }
 
+  clearAllFilters(){
+    store.clearAllFilters();
+  }
+
   render(){
 
     return(
@@ -26,6 +30,7 @@ export default class PhotoOrganizer extends React.Component {
         <FilterBar
           filterBar={store.filterBar}
           setSelectFilter={this.setSelectFilter}
+          clearAllFilters={this.clearAllFilters}
         />
         <div>
           <h3>Results: </h3>

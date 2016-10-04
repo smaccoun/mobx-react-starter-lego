@@ -13,7 +13,7 @@ const PhotoNail = ({photo}) => {
       <div className={style.metaContainer}>
         <p><b>Layer 1:</b>{photo.meta['Layer 1']}</p>
         <p><b>Layer 2:</b>{photo.meta['Layer 2']}</p>
-        <p>{photo.meta.Description.substring(0,60)}</p>
+        <p>{`${photo.meta.Description.substring(0,30)}...`}</p>
       </div>
     </div>
   )
