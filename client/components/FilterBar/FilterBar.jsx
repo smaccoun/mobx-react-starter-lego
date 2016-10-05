@@ -23,8 +23,10 @@ export default class FilterBar extends React.Component {
     let {filterBar} = this.props;
     return(
       <div className={style.container}>
-        <h3>Filters: </h3>
-        <input onChange={this.setSearchField} />
+        <div className={`${style.innerAddon}`}>
+          <span className={`glyphicon glyphicon-search ${style.searchIcon}`}></span>
+          <input type="text" className="form-control" onChange={this.setSearchField} />
+        </div>
         <div className={style.filterSelects}>
           {filterBar.map((filter, key) => {
               return(
@@ -39,7 +41,10 @@ export default class FilterBar extends React.Component {
               )
             })
           }
-          <button onClick={this.props.clearAllFilters}>Clear All Filters </button>
+          <button className='btn btn-primary' style={{marginLeft: '15px'}}
+            onClick={this.props.clearAllFilters}>
+            Clear Filters
+          </button>
         </div>
       </div>
     )

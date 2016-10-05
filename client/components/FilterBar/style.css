@@ -9,8 +9,22 @@
 .filterSelects {
   display: flex;
   border: 1px solid green;
+  margin-top: 15px;
 }
 
 .filterSelect > * {
   min-width: 150px;
+}
+
+/* enable absolute positioning */
+.innerAddon {
+    position: relative;
+}
+
+
+.searchIcon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+  right: 0px;
 }

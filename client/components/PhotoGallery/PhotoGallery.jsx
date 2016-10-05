@@ -1,11 +1,9 @@
 import React from 'react';
-import {observer} from 'mobx-react'
-import store from './PhotoGalleryState'
 import style from './style.css'
 
 import PhotoNail from '../PhotoNail/PhotoNail'
 
-@observer
+
 export default class PhotoGallery extends React.Component {
 
   render(){

@@ -36,7 +36,8 @@ class PhotoNail extends React.Component {
       <div className={style.container}>
         <div  onClick={this.openModal}>
           <div className={style.container__img}>
-            {filename}
+            <h4>{filename}</h4>
+            <p>(a photo will be here)</p>
           </div>
           <div className={style.metaContainer}>
             <p><b>Layer 1:</b>{photo.meta['Layer 1']}</p>
