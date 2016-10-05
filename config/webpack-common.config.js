@@ -39,7 +39,7 @@ module.exports = {
 
     plugins: [
         new HtmlPlugin({
-            title: 'React + MobX',
+            title: 'Photo Organizer',
             template: `${CLIENT}/index.html`,
             favicon: `${ICONS}/favicon.ico`,
             inject: true

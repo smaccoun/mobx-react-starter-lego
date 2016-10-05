@@ -4,6 +4,7 @@
   "description": "Starter kit using Lego idea with server branches ready for merge",
   "scripts": {
     "start": "node ./config/webpack-dev-server.js",
+    "build": "webpack --config ./config/webpack-prod.config.js",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src"
   },
